@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PasswordGenerator" Version="2.0.5" />
+    <PackageReference Include="Twilio" Version="5.37.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ReactChat.DataAccessLayer\ReactChat.DataAccessLayer.csproj" />
+  </ItemGroup>
+
+</Project>

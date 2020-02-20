@@ -1,0 +1,27 @@
+@keyframes opacityLoad{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+
+@keyframes opacityUnLoad{
+    0%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+
+@keyframes loadClock{
+    0%{
+        left:-100%
+    }
+    100%{
+        left:0px;
+    }
+}
