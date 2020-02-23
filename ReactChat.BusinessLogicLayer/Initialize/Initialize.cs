@@ -38,6 +38,7 @@ namespace ReactChat.BusinessLogicLayer.Initialize
             service.AddScoped<IApplicationUserService, ApplicationUserService>();
             service.AddScoped<IMemberService, MemberService>();
             service.AddScoped<IMessageService, MessageService>();
+            service.AddScoped<IVerificationCodeService, VerificationCodeService>();
         }
     }
 }

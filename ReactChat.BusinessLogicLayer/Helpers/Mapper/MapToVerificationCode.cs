@@ -14,7 +14,6 @@ namespace ReactChat.BusinessLogicLayer.Helpers.Mapper
             {
                 Id = verificationCodeModel.Id,
                 UserId = verificationCodeModel.UserId,
-                ExpiresOn = verificationCodeModel.ExpiresOn,
                 Code = verificationCodeModel.Code
             };
         }
@@ -27,6 +26,14 @@ namespace ReactChat.BusinessLogicLayer.Helpers.Mapper
                 User = MapApplicationUser.MapFromApplicationUser(verificationCode.User),
                 ExpiresOn = verificationCode.ExpiresOn,
                 Code = verificationCode.Code
+            };
+        }
+        public static VerificationCode MapToVerficationCodeToCreate(VerificationCodeModel verificationCodeModel)
+        {
+            return new VerificationCode()
+            {
+                UserId = verificationCodeModel.UserId,
+                Code = verificationCodeModel.Code
             };
         }
     }

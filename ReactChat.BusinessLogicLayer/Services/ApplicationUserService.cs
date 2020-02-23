@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ReactChat.BusinessLogicLayer.Services
 {
-    public class ApplicationUserService:IApplicationUserService
+    public class ApplicationUserService : IApplicationUserService
     {
         private readonly IApplicationUserRepository _userRepository;
         private readonly IVerificationCodeService _verificationCodeService;
@@ -20,18 +20,18 @@ namespace ReactChat.BusinessLogicLayer.Services
             _verificationCodeService = verificationCodeService;
         }
 
-        public async Task<ResponseModel<List<string>>> CheckIfUserExist(string phoneNumber)
+        public async Task<ResponseModel<string>> CheckIfUserExist(string phoneNumber)
         {
             var result = await _userRepository.GetUserByPhoneNumberAsync(phoneNumber);
-            if (result != null)
+            if (result == null)
             {
                 var createResult = await CreateAccountByPhoneNumber(phoneNumber);
                 if (!createResult.Result)
                 {
-                    return createResult;
+                    return new GetResponse<string>("").GetErrorResponse(createResult.Message.ToString());
                 }
             }
-            
+            return await _verificationCodeService.CreateAsync(new VerificationCodeModel() { PhoneNumber = phoneNumber });
         }
 
         public async Task<ResponseModel<List<string>>> CreateAccountByPhoneNumber(string phoneNumber)

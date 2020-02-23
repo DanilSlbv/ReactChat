@@ -12,5 +12,6 @@ namespace ReactChat.DataAccessLayer.Repositories.Interfaces
         Task<VerificationCode> GetByCode(string code);
         Task<bool> RemoveItemByUserId(string userId);
         Task<bool> CheckCodeAndConfirm(VerificationCode verificationCode);
+        Task<bool> RemoveCodeByPhoneNumber(string phoneNumber);
     }
 }

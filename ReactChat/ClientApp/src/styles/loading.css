@@ -1,0 +1,24 @@
+.loadingPosition{
+    top:70%;
+    left:0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    margin:auto;
+    width:30px;
+    height: 30px;
+    background-color: rgba(0, 0, 0,0.0);
+}
+
+.loadingImage{
+    animation: loadingAnimation 1s infinite;
+}
+
+@keyframes loadingAnimation{
+    0%{
+        transform: rotate(10deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}

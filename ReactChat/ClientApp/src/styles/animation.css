@@ -25,3 +25,14 @@
         left:0px;
     }
 }
+
+
+
+@keyframes rotateBtn{
+    0%{
+        transform: rotate(90deg);
+    }
+    100%{
+        transform: rotate(720deg);
+    }
+}

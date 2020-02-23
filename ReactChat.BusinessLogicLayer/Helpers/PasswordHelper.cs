@@ -9,7 +9,7 @@ namespace ReactChat.BusinessLogicLayer.Helpers
         private string Password { get; set; }
         public PasswordHelper()
         {
-            var pwd = new PasswordGenerator.Password().IncludeLowercase().IncludeUppercase().IncludeSpecial().LengthRequired(8);
+            var pwd = new PasswordGenerator.Password().IncludeLowercase().IncludeUppercase().LengthRequired(8);
             Password = pwd.Next();
         }
 

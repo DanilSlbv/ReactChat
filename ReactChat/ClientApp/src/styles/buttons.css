@@ -1,4 +1,4 @@
-button{
+.button{
     width: 120px;
     height: 40px;
     border-radius: 16px;
@@ -9,6 +9,6 @@ button{
     outline: none;
 }
 
-button:active{
+.button:active{
         background-color: rgba(255, 255, 255, 0.6);
 }

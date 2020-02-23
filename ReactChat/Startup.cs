@@ -18,7 +18,7 @@ using ReactChat.DataAccessLayer.Entities;
 namespace ReactChat
 {
     public class Startup
-    {   
+    {
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -32,18 +32,26 @@ namespace ReactChat
             Initialize.DbInit(services, Configuration);
             Initialize.RepositoryInitialize(services);
             Initialize.ServicesInitialize(services);
-
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
+                    });
+            });
             services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            app.UseCors();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseHttpsRedirection();
 
             app.UseRouting();

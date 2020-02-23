@@ -22,12 +22,18 @@ namespace ReactChat.DataAccessLayer.Repositories
 
         public async Task<bool> CreateAsync(TEntity entity)
         {
-            await _dbSet.AddAsync(entity);
-            if (await _context.SaveChangesAsync() > 0)
+            try
             {
-                return true;
+                await _dbSet.AddAsync(entity);
+                if (await _context.SaveChangesAsync() > 0)
+                {
+                    return true;
+                }
+                return false;
+            }catch(Exception exc)
+            {
+                return false;
             }
-            return false;
         }
 
         public async Task<bool> EditAsync(TEntity entity)

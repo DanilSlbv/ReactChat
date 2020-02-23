@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import MainPage from '../main/mainPage';
 import '../../styles/importStyles'; 
 import Slider from 'infinite-react-carousel';
-import createAccount from '../../services/requests/ApplicationUserRequests';
+import checkAccountIfExist from '../../services/requests/ApplicationUserRequests';
+import ConfirmCode from '../../services/requests/VerificationCodeRequests';
 
 export default class LoadLogIn extends Component
 {
@@ -22,8 +23,7 @@ export default class LoadLogIn extends Component
     }
 
     onStartClick(event) {
-        debugger;
-        createAccount();
+        ConfirmCode("","","");
     }
 
     onInputChange(event){
@@ -45,8 +45,8 @@ export default class LoadLogIn extends Component
                 <div class="grid-item" style={{paddingTop: 0,}}>
                     <input onChange={this.onInputChange} name="PhoneNumber" placeholder="Phone number" class="shadowBorder"></input>
                 </div>
-                <div class="grid-item">
-                    <button class="shadowBorder" onClick={this.onStartClick}>START</button>
+                <div id="buttonGrid" class="grid-item">
+                    <button id="phoneNumberId" class="button shadowBorder" onKeyPress={this.isNumberKey} onClick={this.onStartClick}>Continue</button>
                 </div>
             </div>);
     }

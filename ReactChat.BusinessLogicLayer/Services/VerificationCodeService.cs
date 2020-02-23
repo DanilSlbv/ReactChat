@@ -32,13 +32,22 @@ namespace ReactChat.BusinessLogicLayer.Services
                 verificationCode.UserId = user.Id;
             }
             verificationCode.Code = new PasswordHelper().GeneratePassword();
-            var result = await _verificationCodeRepository.CreateAsync(MapToVerificationCode.MapToVerificationCodeEntity(verificationCode));
-            if (result)
+            var result = await _verificationCodeRepository.CreateAsync(MapToVerificationCode.MapToVerficationCodeToCreate(verificationCode));
+            if (!result)
             {
-                var result = new TwilioHelper().SendMessage(verificationCode.PhoneNumber, verificationCode.Code);
-                return new GetResponse<string>("").GetSuccessResponse("");
+                return new GetResponse<string>("").GetErrorResponse("Error while sending code");
             }
-            return new GetResponse<string>("").GetErrorResponse("");
+            var sendResult = await new TwilioHelper().SendMessage(verificationCode.PhoneNumber, verificationCode.Code);
+            if (string.IsNullOrEmpty(sendResult))
+            {
+                return new GetResponse<string>(verificationCode.UserId).GetSuccessResponse("");
+            }
+            var removeResult = await RemoveByPhoneNumber(verificationCode.PhoneNumber);
+            if (!removeResult)
+            {
+                return new GetResponse<string>("").GetErrorResponse("Please press resend");
+            }
+            return new GetResponse<string>("").GetErrorResponse("Error while sending code");
         }
 
         public async Task<ResponseModel<VerificationCodeModel>>GetByUserId(string userId)
@@ -59,5 +68,11 @@ namespace ReactChat.BusinessLogicLayer.Services
             return result;
         }
 
+        public async Task<bool> RemoveByPhoneNumber(string phoneNumber)
+        {
+            var result = await _verificationCodeRepository.RemoveCodeByPhoneNumber(phoneNumber);
+            return result;
+        }
+        
     }
 }

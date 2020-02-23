@@ -7,6 +7,9 @@ html {
   background-size: cover;
 }
 
+button:focus {outline:0;}
+img:focus{outline: 0; border:0;}
+
 .bigLabel {
   font-size: 40px;
   color: white;
@@ -21,7 +24,6 @@ html {
   box-shadow: rgba(255, 255, 255, 0.75) 0px 0px 8px 3px;
   transition: 0.5s;
 }
-
 
 .clockItem{
   margin: 0;

@@ -62,5 +62,17 @@ namespace ReactChat.DataAccessLayer.Repositories
             }
             return false;
         }
+
+        public async Task<bool> RemoveCodeByPhoneNumber(string phoneNumber)
+        {
+            var result = await _context.VerificationCodes.Where(x => x.Deleted == false && x.User.PhoneNumber == phoneNumber && x.ExpiresOn <= DateTime.Now).FirstOrDefaultAsync();
+            result.Deleted = true;
+            _context.Update(result);
+            if (await _context.SaveChangesAsync() > 0)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

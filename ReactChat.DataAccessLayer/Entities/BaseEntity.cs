@@ -12,6 +12,7 @@ namespace ReactChat.DataAccessLayer.Entities
         public bool Deleted { get; set; }
         public BaseEntity()
         {
+            Id = Guid.NewGuid().ToString();
             Deleted = false;
             CreateOn = DateTime.Now;
         }

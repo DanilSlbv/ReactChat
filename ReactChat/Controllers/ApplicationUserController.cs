@@ -22,18 +22,20 @@ namespace ReactChat.Controllers
 
         [HttpGet]
         [Route("CreateAccount")]
-        public IActionResult CreateAccount()
+        public async Task<IActionResult> CreateAccount(string phoneNumber)
         {
-            return Ok("Success");
+            var result = await _applicationUserService.CheckIfUserExist(phoneNumber);
+            return Ok(result);
         }
 
         [HttpPost]
         [Route("SendVerification")]
-        public IActionResult SendVerification(string phoneNumber)
+        public IActionResult ReSendVerification(string phoneNumber)
         {
             return Ok();
         }
 
+       
 
     }
 }
