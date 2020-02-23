@@ -12,6 +12,9 @@ export default class LoadLogIn extends Component
     constructor(props) {
         super(props);
         this.state={
+            VerificationCodeSend:false,
+            VerificationCodeConfirm:false,
+            IsNewUser:false,
             UserName:'',
             FirstName:'',
             LastName:'',

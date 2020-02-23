@@ -6,3 +6,4 @@ import './input.css';
 import './shared.css';
 import './header.css';
 import './loading.css';
+import './notification.css';

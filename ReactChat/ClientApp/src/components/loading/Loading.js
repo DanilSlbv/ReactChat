@@ -2,9 +2,18 @@ import React, { Component }  from 'react';
 import "../../styles/importStyles";
 
 export default class Loading extends Component{
+
+    static startLoading(){
+        document.getElementById("loadingPosition").classList.add("loadingAppearance");
+    }
+
+    static endloading(){
+        document.getElementById("loadingPosition").classList.remove("loadingAppearance");
+    }
+
     render(){
-        return(<div class = "loadingPosition">
-            <img  class="loadingImage" src="https://image.flaticon.com/icons/svg/1665/1665580.svg" width="70px" height="70px"></img>
+        return(<div id="loadingPosition" class = "loadingPosition">
+            <img  class="loadingImage" src="https://image.flaticon.com/icons/svg/552/552621.svg"></img>
         </div>);
     }
 }
