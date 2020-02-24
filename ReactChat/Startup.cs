@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using ReactChat.BusinessLogicLayer.Common.Constants;
 using ReactChat.BusinessLogicLayer.Initialize;
 using ReactChat.DataAccessLayer;
 using ReactChat.DataAccessLayer.Entities;
@@ -37,10 +39,12 @@ namespace ReactChat
                 options.AddDefaultPolicy(
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
+                        builder.WithOrigins(Constants.UrlConstants.ClientSideUrl).AllowAnyHeader().AllowAnyMethod();
                     });
             });
             services.AddControllers();
+            services.AddSignalR();
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -3,6 +3,7 @@ using ReactChat.DataAccessLayer.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ReactChat.DataAccessLayer.Repositories
 {
@@ -13,7 +14,6 @@ namespace ReactChat.DataAccessLayer.Repositories
         {
             _context = context;
         }
-
         
     }
 }

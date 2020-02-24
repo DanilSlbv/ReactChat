@@ -57,6 +57,22 @@ namespace ReactChat.DataAccessLayer.Repositories
             return result.Errors.Select(x => x.Description).ToList();
         }
 
+        public async Task<bool> ConfirmPhoneNumber(string userId)
+        {
+            var user = await _userManager.Users.Where(x => x.Id == userId).FirstOrDefaultAsync();
+            if (user == null)
+            {
+                return false;
+            }
+            user.PhoneNumberConfirmed = true;
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                return false;
+            }
+            return true;
+        }
+
         private async Task<List<string>> AddtoRoleAsync(ApplicationUser applicationUser)
         {
             var result = await _userManager.AddToRoleAsync(applicationUser, "user");

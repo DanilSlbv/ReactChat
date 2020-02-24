@@ -12,9 +12,11 @@ namespace ReactChat.DataAccessLayer.Repositories
     public class VerificationCodeRepository : BaseRepository<VerificationCode>, IVerificationCodeRepository
     {
         private readonly ApplicationContext _context;
-        public VerificationCodeRepository(ApplicationContext context) : base(context)
+        private readonly IApplicationUserRepository _applicationUserRepository;
+        public VerificationCodeRepository(ApplicationContext context,IApplicationUserRepository applicationUserRepository) : base(context)
         {
             _context = context;
+            _applicationUserRepository = applicationUserRepository;
         }
 
         public async Task<bool> CheckExpire(string userId)

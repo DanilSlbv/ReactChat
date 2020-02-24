@@ -1,7 +1,9 @@
-﻿using ReactChat.BusinessLogicLayer.Helpers;
+﻿using AutoMapper;
+using ReactChat.BusinessLogicLayer.Helpers;
 using ReactChat.BusinessLogicLayer.Helpers.Mapper;
 using ReactChat.BusinessLogicLayer.Models;
 using ReactChat.BusinessLogicLayer.Services.Interfaces;
+using ReactChat.DataAccessLayer.Entities;
 using ReactChat.DataAccessLayer.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -14,10 +16,15 @@ namespace ReactChat.BusinessLogicLayer.Services
     {
         private readonly IVerificationCodeRepository _verificationCodeRepository;
         private readonly IApplicationUserRepository _applicationUserRepository;
-        public VerificationCodeService(IVerificationCodeRepository verificationCodeRepository, IApplicationUserRepository applicationUserRepository)
+        private readonly IMapper _mapper;
+
+        public VerificationCodeService(IVerificationCodeRepository verificationCodeRepository, 
+                                       IApplicationUserRepository applicationUserRepository,
+                                       IMapper mapper)
         {
             _verificationCodeRepository = verificationCodeRepository;
             _applicationUserRepository = applicationUserRepository;
+            _mapper = mapper;
         }
 
         public async Task<ResponseModel<string>>CreateAsync(VerificationCodeModel verificationCode)
@@ -32,7 +39,7 @@ namespace ReactChat.BusinessLogicLayer.Services
                 verificationCode.UserId = user.Id;
             }
             verificationCode.Code = new PasswordHelper().GeneratePassword();
-            var result = await _verificationCodeRepository.CreateAsync(MapToVerificationCode.MapToVerficationCodeToCreate(verificationCode));
+            var result = await _verificationCodeRepository.CreateAsync(_mapper.Map<VerificationCode>(verificationCode));
             if (!result)
             {
                 return new GetResponse<string>("").GetErrorResponse("Error while sending code");
@@ -53,7 +60,7 @@ namespace ReactChat.BusinessLogicLayer.Services
         public async Task<ResponseModel<VerificationCodeModel>>GetByUserId(string userId)
         {
             var result = await _verificationCodeRepository.GetById(userId);
-            return new GetResponse<VerificationCodeModel>(MapToVerificationCode.MapToVerificationCodeModel(result)).GetSuccessResponse("");
+            return new GetResponse<VerificationCodeModel>(_mapper.Map<VerificationCodeModel>(result)).GetSuccessResponse("");
         }
 
         public async Task<bool> CheckIfExpired(string userId)
@@ -64,7 +71,7 @@ namespace ReactChat.BusinessLogicLayer.Services
 
         public async Task<bool> ConfirmCode(VerificationCodeModel verificationCode)
         {
-            var result = await _verificationCodeRepository.CheckCodeAndConfirm(MapToVerificationCode.MapToVerificationCodeEntity(verificationCode));
+            var result = await _verificationCodeRepository.CheckCodeAndConfirm(_mapper.Map<VerificationCode>(verificationCode));
             return result;
         }
 

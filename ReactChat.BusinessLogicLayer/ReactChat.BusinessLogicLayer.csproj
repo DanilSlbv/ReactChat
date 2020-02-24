@@ -5,7 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="PasswordGenerator" Version="2.0.5" />
+    <PackageReference Include="Rijndael256" Version="3.2.0" />
     <PackageReference Include="Twilio" Version="5.37.5" />
   </ItemGroup>
 

@@ -1,4 +1,5 @@
-﻿using ReactChat.BusinessLogicLayer.Helpers;
+﻿using AutoMapper;
+using ReactChat.BusinessLogicLayer.Helpers;
 using ReactChat.BusinessLogicLayer.Models;
 using ReactChat.BusinessLogicLayer.Services.Interfaces;
 using ReactChat.DataAccessLayer.Repositories.Interfaces;
@@ -13,9 +14,12 @@ namespace ReactChat.BusinessLogicLayer.Services
     {
 
         private readonly IMemberRepository _memberRepository;
-        public MemberService(IMemberRepository memberRepository)
+        private readonly IMapper _mapper;
+        public MemberService(IMemberRepository memberRepository,
+                             IMapper mapper)
         {
             _memberRepository = memberRepository;
+            _mapper = mapper;
         }
 
         public async Task<ResponseModel<string>> CreateAsync(MemberModel memberModel)

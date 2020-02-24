@@ -16,6 +16,7 @@ namespace ReactChat.BusinessLogicLayer.Initialize
 {
     public class Initialize
     {
+
         public static void DbInit(IServiceCollection service, IConfiguration _configuration)
         {
             service.AddDbContext<ApplicationContext>(options => options.UseLazyLoadingProxies().UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
@@ -40,5 +41,6 @@ namespace ReactChat.BusinessLogicLayer.Initialize
             service.AddScoped<IMessageService, MessageService>();
             service.AddScoped<IVerificationCodeService, VerificationCodeService>();
         }
+
     }
 }

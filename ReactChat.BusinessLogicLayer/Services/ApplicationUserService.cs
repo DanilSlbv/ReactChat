@@ -1,4 +1,5 @@
-﻿using ReactChat.BusinessLogicLayer.Helpers;
+﻿using AutoMapper;
+using ReactChat.BusinessLogicLayer.Helpers;
 using ReactChat.BusinessLogicLayer.Helpers.Mapper;
 using ReactChat.BusinessLogicLayer.Models;
 using ReactChat.BusinessLogicLayer.Services.Interfaces;
@@ -14,10 +15,14 @@ namespace ReactChat.BusinessLogicLayer.Services
     {
         private readonly IApplicationUserRepository _userRepository;
         private readonly IVerificationCodeService _verificationCodeService;
-        public ApplicationUserService(IApplicationUserRepository userRepository, IVerificationCodeService verificationCodeService)
+        private readonly IMapper _mapper;
+        public ApplicationUserService(IApplicationUserRepository userRepository, 
+                                      IVerificationCodeService verificationCodeService,
+                                      IMapper mapper)
         {
             _userRepository = userRepository;
             _verificationCodeService = verificationCodeService;
+            _mapper = mapper;
         }
 
         public async Task<ResponseModel<string>> CheckIfUserExist(string phoneNumber)
