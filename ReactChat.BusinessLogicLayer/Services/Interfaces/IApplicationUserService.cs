@@ -8,8 +8,9 @@ namespace ReactChat.BusinessLogicLayer.Services.Interfaces
 {
     public interface IApplicationUserService
     {
-        Task<ResponseModel<List<string>>> CreateAccountAsync(SignUpModel signUpModel);
-        Task<ResponseModel<string>> CheckIfUserExist(string phoneNumber);
-        Task<ResponseModel<List<string>>> CreateAccountByPhoneNumber(string phoneNumber);
+        Task<SignInResponse> CheckIfUserExistAsync(string phoneNumber);
+        Task<ResponseModel<List<string>>> CreateAccountByPhoneNumberAsync(string phoneNumber);
+        Task<ResponseModel<List<string>>> CreateAccountAsync(SignInModel signUpModel);
+        Task<ResponseModel<string>> AdditionalSecurityVerificationAsync(SignInModel signInModel);
     }
 }

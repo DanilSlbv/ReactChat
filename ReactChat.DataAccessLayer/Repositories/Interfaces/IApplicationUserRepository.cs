@@ -1,4 +1,5 @@
 ﻿using ReactChat.DataAccessLayer.Entities;
+using ReactChat.DataAccessLayer.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,5 +15,8 @@ namespace ReactChat.DataAccessLayer.Repositories.Interfaces
         Task<List<string>> CreateAsync(ApplicationUser user);
         Task<List<string>> DeleteUserAsync(string id);
         Task<List<string>> EditUserAsync(ApplicationUser editUser);
+        Task<bool> ConfirmPhoneNumberAsync(string userId);
+        Task<bool> AddNewPasswordAsync(ApplicationUser applicationUser, AdditionalSecurity additionalSecurity, string passwordHash);
+        Task<string> GetPasswordHashAsync(string userId, AdditionalSecurity additionalSecurity);
     }
 }

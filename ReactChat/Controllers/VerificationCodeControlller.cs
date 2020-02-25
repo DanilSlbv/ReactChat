@@ -23,9 +23,9 @@ namespace ReactChat.Controllers
 
         [HttpPost]
         [Route("ConfirmCode")]
-        public async Task<IActionResult> ConfirmCode(VerificationCodeModel verificationCodeModel)
+        public async Task<IActionResult> ConfirmCode(SignInModel signInModel)
         {
-            var result = await _verificationCodeService.ConfirmCode(verificationCodeModel);
+            var result = await _verificationCodeService.ConfirmCodeAsync(signInModel);
             return Ok(result);
         }
 

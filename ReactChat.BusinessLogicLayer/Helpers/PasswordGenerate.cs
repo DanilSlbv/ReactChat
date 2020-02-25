@@ -4,12 +4,12 @@ using System.Text;
 
 namespace ReactChat.BusinessLogicLayer.Helpers
 {
-    public class PasswordHelper
+    public class PasswordGenerate
     {
         private string Password { get; set; }
-        public PasswordHelper()
+        public PasswordGenerate()
         {
-            var pwd = new PasswordGenerator.Password().IncludeLowercase().IncludeUppercase().LengthRequired(8);
+            var pwd = new PasswordGenerator.Password().IncludeLowercase().IncludeUppercase().LengthRequired(6);
             Password = pwd.Next();
         }
 

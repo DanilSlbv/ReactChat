@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ReactChat.DataAccessLayer.Entities;
+using ReactChat.DataAccessLayer.Entities.Enums;
 using ReactChat.DataAccessLayer.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,16 +11,14 @@ using System.Threading.Tasks;
 
 namespace ReactChat.DataAccessLayer.Repositories
 {
-    public class ApplicationUserRepository:IApplicationUserRepository
+    public class ApplicationUserRepository : IApplicationUserRepository
     {
         private readonly UserManager<ApplicationUser> _userManager;
-       // private readonly SignInManager<ApplicationUser> _signInManager;
         public ApplicationUserRepository(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
-            //_signInManager = signInManager;
         }
-        
+
         public async Task<ApplicationUser> GetUserByIdAsync(string id)
         {
             return await _userManager.FindByIdAsync(id);
@@ -57,7 +56,7 @@ namespace ReactChat.DataAccessLayer.Repositories
             return result.Errors.Select(x => x.Description).ToList();
         }
 
-        public async Task<bool> ConfirmPhoneNumber(string userId)
+        public async Task<bool> ConfirmPhoneNumberAsync(string userId)
         {
             var user = await _userManager.Users.Where(x => x.Id == userId).FirstOrDefaultAsync();
             if (user == null)
@@ -73,11 +72,38 @@ namespace ReactChat.DataAccessLayer.Repositories
             return true;
         }
 
+        public async Task<bool> AddNewPasswordAsync(ApplicationUser applicationUser, AdditionalSecurity additionalSecurity, string passwordHash)
+        {
+            if ((double)additionalSecurity == 1)
+            {
+                applicationUser.PinCodeHash = passwordHash;
+            }
+            if ((double)additionalSecurity == 2)
+            {
+                applicationUser.PasswordHash = passwordHash;
+            }
+            var result = await _userManager.UpdateAsync(applicationUser);
+            return result.Succeeded;
+        }
+
+        public async Task<string> GetPasswordHashAsync(string userId, AdditionalSecurity additionalSecurity)
+        {
+            var applicationUser = await _userManager.Users.Where(x => x.Id == userId).FirstOrDefaultAsync();
+            if ((double)additionalSecurity == 1)
+            {
+                return applicationUser.PinCodeHash;
+            }
+            if((double)additionalSecurity == 2)
+            {
+                return applicationUser.PasswordHash;
+            }
+            return null;
+        }
+
         private async Task<List<string>> AddtoRoleAsync(ApplicationUser applicationUser)
         {
             var result = await _userManager.AddToRoleAsync(applicationUser, "user");
             return result.Errors.Select(x => x.Description).ToList();
         }
-
     }
 }

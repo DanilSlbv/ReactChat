@@ -9,9 +9,9 @@ namespace ReactChat.BusinessLogicLayer.Services.Interfaces
     public interface IVerificationCodeService
     {
         Task<ResponseModel<string>> CreateAsync(VerificationCodeModel verificationCode);
-        Task<ResponseModel<VerificationCodeModel>> GetByUserId(string userId);
-        Task<bool> CheckIfExpired(string userId);
-        Task<bool> ConfirmCode(VerificationCodeModel verificationCode);
-        Task<bool> RemoveByPhoneNumber(string phoneNumber);
+        Task<ResponseModel<VerificationCodeModel>> GetByUserIdAsync(string userId);
+        Task<bool> CheckIfExpiredAsync(string userId);
+        Task<bool> ConfirmCodeAsync(SignInModel signInModel);
+        Task<bool> RemoveByPhoneNumberAsync(string phoneNumber);
     }
 }

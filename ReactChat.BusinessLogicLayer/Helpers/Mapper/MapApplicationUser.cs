@@ -8,16 +8,6 @@ namespace ReactChat.BusinessLogicLayer.Helpers.Mapper
 {
     public static class MapApplicationUser
     {
-        public static ApplicationUser MapFromSignUpModel(SignUpModel signUpModel)
-        {
-            return new ApplicationUser
-            {
-                FirstName = signUpModel.FirstName,
-                LastName = signUpModel.LastName,
-                PhoneNumber = signUpModel.PhoneNumber,
-                UserName = signUpModel.UserName
-            };
-        }
         public static ApplicationUser MapFromUserModel(UserModel userModel)
         {
             return new ApplicationUser
@@ -26,7 +16,7 @@ namespace ReactChat.BusinessLogicLayer.Helpers.Mapper
                 LastName = userModel.LastName,
                 UserName = userModel.UserName,
                 PhoneNumber = userModel.PhoneNumber,
-                PhoneNumberConfirmed = userModel.PhoneVerified
+                PhoneNumberConfirmed = userModel.PhoneNumberConfirmed
             };
         }
         public static UserModel MapFromApplicationUser(ApplicationUser applicationUser)
@@ -37,7 +27,7 @@ namespace ReactChat.BusinessLogicLayer.Helpers.Mapper
                 FirstName = applicationUser.FirstName,
                 LastName = applicationUser.LastName,
                 PhoneNumber = applicationUser.PhoneNumber,
-                PhoneVerified = applicationUser.PhoneNumberConfirmed
+                PhoneNumberConfirmed = applicationUser.PhoneNumberConfirmed
             };
         }
     }

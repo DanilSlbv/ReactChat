@@ -11,6 +11,6 @@ namespace ReactChat.BusinessLogicLayer.Models
         public string LastName { get; set; }
         public string UserName { get; set; }
         public string PhoneNumber { get; set; }
-        public bool PhoneVerified { get; set; }
+        public bool PhoneNumberConfirmed { get; set; }
     }
 }

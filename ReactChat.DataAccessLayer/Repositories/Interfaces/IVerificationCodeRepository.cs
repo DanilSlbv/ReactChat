@@ -8,10 +8,11 @@ namespace ReactChat.DataAccessLayer.Repositories.Interfaces
 {
     public interface IVerificationCodeRepository:IBaseRepository<VerificationCode>
     {
-        Task<bool> CheckExpire(string userId);
-        Task<VerificationCode> GetByCode(string code);
-        Task<bool> RemoveItemByUserId(string userId);
-        Task<bool> CheckCodeAndConfirm(VerificationCode verificationCode);
-        Task<bool> RemoveCodeByPhoneNumber(string phoneNumber);
+        Task<bool> CheckExpireAsync(string userId);
+        Task<VerificationCode> GetByCodeAsync(string code);
+        Task<bool> RemoveItemByUserIdAsync(string userId);
+        Task<bool> CheckCodeAndConfirmAsync(string phoneNumber, string verificationCode);
+        Task<bool> RemoveCodeByPhoneNumberAsync(string phoneNumber);
+        Task<bool> RemoveAllCodesByPhoneNumberAsync(string phoneNumber);
     }
 }

@@ -19,7 +19,7 @@ namespace ReactChat.DataAccessLayer.Repositories
             _applicationUserRepository = applicationUserRepository;
         }
 
-        public async Task<bool> CheckExpire(string userId)
+        public async Task<bool> CheckExpireAsync(string userId)
         {
             if (await _context.VerificationCodes.Where(x => x.Deleted == false && x.UserId == userId && x.ExpiresOn <= DateTime.UtcNow).FirstOrDefaultAsync() != null)
             {
@@ -28,12 +28,12 @@ namespace ReactChat.DataAccessLayer.Repositories
             return false;
         }
 
-        public async Task<VerificationCode> GetByCode(string code)
+        public async Task<VerificationCode> GetByCodeAsync(string code)
         {
             return await _context.VerificationCodes.Where(x => x.Code == code && x.Deleted == false && x.ExpiresOn <= DateTime.UtcNow).FirstOrDefaultAsync();
         }
 
-        public async Task<bool> RemoveItemByUserId(string userId)
+        public async Task<bool> RemoveItemByUserIdAsync(string userId)
         {
             var item = await _context.VerificationCodes.Where(x => x.UserId == userId && x.Deleted == false).FirstOrDefaultAsync();
             if (item == null)
@@ -49,9 +49,9 @@ namespace ReactChat.DataAccessLayer.Repositories
             return false;
         }
 
-        public async Task<bool> CheckCodeAndConfirm(VerificationCode verificationCode)
+        public async Task<bool> CheckCodeAndConfirmAsync(string phoneNumber, string verificationCode)
         {
-            var code = await _context.VerificationCodes.Where(x => x.Deleted == false && x.UserId == verificationCode.UserId && x.Code == verificationCode.Code && x.ExpiresOn <= DateTime.Now).FirstOrDefaultAsync(); 
+            var code = await _context.VerificationCodes.Where(x => x.Deleted == false && x.User.PhoneNumber==phoneNumber && x.Code == verificationCode && x.ExpiresOn <= DateTime.Now).FirstOrDefaultAsync(); 
             if(code == null)
             {
                 return false;
@@ -65,7 +65,7 @@ namespace ReactChat.DataAccessLayer.Repositories
             return false;
         }
 
-        public async Task<bool> RemoveCodeByPhoneNumber(string phoneNumber)
+        public async Task<bool> RemoveCodeByPhoneNumberAsync(string phoneNumber)
         {
             var result = await _context.VerificationCodes.Where(x => x.Deleted == false && x.User.PhoneNumber == phoneNumber && x.ExpiresOn <= DateTime.Now).FirstOrDefaultAsync();
             result.Deleted = true;
@@ -76,5 +76,19 @@ namespace ReactChat.DataAccessLayer.Repositories
             }
             return false;
         }
+
+        public async Task<bool> RemoveAllCodesByPhoneNumberAsync(string phoneNumber)
+        {
+            var resultElements = new List<VerificationCode>();
+            var elementsToRemove = await _context.VerificationCodes.Where(x => x.Deleted == false && x.User.PhoneNumber == phoneNumber && x.ExpiresOn <= DateTime.Now).ToListAsync();
+            elementsToRemove.ForEach(x => { x.Deleted = true; resultElements.Add(x); });
+            _context.VerificationCodes.UpdateRange(resultElements);
+            if(await _context.SaveChangesAsync() > 0 || resultElements.Count()==0)
+            {
+                return true;
+            }
+            return false;
+        }
+
     }
 }
